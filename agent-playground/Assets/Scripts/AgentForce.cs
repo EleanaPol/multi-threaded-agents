@@ -22,13 +22,13 @@ public class AgentForce : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    public virtual void Start()
     {
         
     }
 
     // Update is called once per frame
-    void Update()
+    public virtual void Update()
     {
 
     }
@@ -46,7 +46,7 @@ public class AgentForce : MonoBehaviour
         
     }
 
-    private void OnDestroy()
+    public virtual void OnDestroy()
     {
         ClearJobMemory();
     }

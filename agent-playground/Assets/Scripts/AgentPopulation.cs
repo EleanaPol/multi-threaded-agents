@@ -6,8 +6,7 @@ using Unity.Mathematics;
 using Unity.Jobs;
 
 public class AgentPopulation : MonoBehaviour
-{
-   
+{   
     [Header("Population Settings")]
     public int num_agents;
 
@@ -17,13 +16,25 @@ public class AgentPopulation : MonoBehaviour
 
     [Header("System Forces")]
     public SystemForce[] forces;
-    
+
+    [Header("Population Rendering")]
+    [Tooltip("The mesh to be instanced")]
+    public Mesh instanceMesh;
+
+    [Tooltip("The material with which to render the instanced meshes")]
+    public Material instanceMaterial;
+
+    [Tooltip("The submesh of the original mesh to render")]
+    public int subMeshIndex = 0;
+
+
 
     // Native Arrays
     private NativeArray<Agent> job_agents;
     public NativeArray<int> job_bins;
     public NativeArray<int> job_bin_counters;
     private NativeArray<float3> job_agent_overall_forces;
+    private NativeArray<float3> job_agent_positions;
 
     // private variables
     private int num_bins;
@@ -42,6 +53,18 @@ public class AgentPopulation : MonoBehaviour
     private int num_forces;
     private Unity.Mathematics.Random random;
 
+    // The total number of particles
+    private int instanceCount = 0;
+    private int cachedInstanceCount = -1;
+    private int cachedSubMeshIndex = -1;
+
+    // GPU Buffers
+    private ComputeBuffer positionBuffer;
+    private ComputeBuffer argsBuffer;
+
+    // Instanced Shader Arguments array
+    private uint[] args = new uint[5] { 0, 0, 0, 0, 0 };
+
 
     #region MonoBehaviour
 
@@ -54,7 +77,9 @@ public class AgentPopulation : MonoBehaviour
 
         InitializePopulationForces();
 
-        CreateAgentObjects();
+        InitInstancing();
+
+        //CreateAgentObjects();
     }
 
     // Update is called once per frame
@@ -62,9 +87,32 @@ public class AgentPopulation : MonoBehaviour
     {
         AssignToBins();
         UpdatePopulationForces();
+        MoveAgents();
+
         ClearAgentForces();
 
-        UpdateAgentObjects();
+        //UpdateAgentObjects();
+    }
+
+    private void LateUpdate()
+    {
+        // Update the Buffers with the new data for this frame
+        positionBuffer.SetData(job_agent_positions);
+
+        // Pass the Buffers to the shader
+        instanceMaterial.SetBuffer("_positionBuffer", positionBuffer);
+
+        // Render instance meshes
+        Graphics.DrawMeshInstancedIndirect
+            (
+            instanceMesh,
+            subMeshIndex,
+            instanceMaterial,
+            new Bounds(Vector3.zero, new Vector3(1000.0f, 1000.0f, 1000.0f)),
+            argsBuffer,
+            0,
+            new MaterialPropertyBlock(),
+            UnityEngine.Rendering.ShadowCastingMode.Off);
     }
 
     private void OnDestroy()
@@ -148,7 +196,13 @@ public class AgentPopulation : MonoBehaviour
             }
         }
 
+        
+    }
+
+    private void MoveAgents()
+    {
         ScheduleAgentMove();
+        SchedulePositionExtractionJob();
     }
 
     private void ClearAgentForces()
@@ -174,6 +228,7 @@ public class AgentPopulation : MonoBehaviour
         job_bins = new NativeArray<int>(num_bins * num_agents_per_bin, Allocator.Persistent);
         job_bin_counters = new NativeArray<int>(num_bins, Allocator.Persistent);
         job_agent_overall_forces = new NativeArray<float3>(num_agents, Allocator.Persistent);
+        job_agent_positions = new NativeArray<float3>(num_agents, Allocator.Persistent);
     }
 
     private void ClearJobMemory()
@@ -182,6 +237,7 @@ public class AgentPopulation : MonoBehaviour
         if (job_bins.IsCreated) job_bins.Dispose();
         if (job_bin_counters.IsCreated) job_bin_counters.Dispose();
         if (job_agent_overall_forces.IsCreated) job_agent_overall_forces.Dispose();
+        if (job_agent_positions.IsCreated) job_agent_positions.Dispose();
     }
 
     private void ScheduleBinCleaning()
@@ -249,8 +305,53 @@ public class AgentPopulation : MonoBehaviour
         clearForce.Schedule(num_agents, 128).Complete();
     }
 
+    private void SchedulePositionExtractionJob()
+    {
+        var extractpositionsJob = new ExtractAgentPositionsJob
+        {
+            agents = job_agents,
+            positions = job_agent_positions
+        };
+
+        extractpositionsJob.Schedule(num_agents, 128).Complete();
+    }
+
 
     #endregion
+
+    #region Rendering
+
+    private void InitInstancing()
+    {
+        instanceCount = num_agents;
+        argsBuffer = new ComputeBuffer(1, args.Length * sizeof(uint), ComputeBufferType.IndirectArguments);
+
+        // A float3 has size of 3 x 4bytes = 12 bytes
+        positionBuffer = new ComputeBuffer(instanceCount, 12);
+        
+
+        // Set the Buffer data and then pass the buffer to the shader
+        positionBuffer.SetData(job_agent_positions);
+        instanceMaterial.SetBuffer("_positionBuffer", positionBuffer);
+
+
+        // Update the Indirect arguments
+        if (instanceMesh != null)
+        {
+            args[0] = (uint)instanceMesh.GetIndexCount(0);
+            args[1] = (uint)instanceCount;
+            args[2] = (uint)instanceMesh.GetIndexStart(0);
+            args[3] = (uint)instanceMesh.GetBaseVertex(0);
+        }
+        else
+        {
+            args[0] = args[1] = args[2] = args[3] = 0;
+        }
+        argsBuffer.SetData(args);
+    }
+
+    #endregion
+
 
     #region Testing
 
