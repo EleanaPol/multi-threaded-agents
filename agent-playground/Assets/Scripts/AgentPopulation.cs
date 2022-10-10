@@ -25,7 +25,7 @@ public class AgentPopulation : MonoBehaviour
     public Material instanceMaterial;
 
     [Tooltip("The submesh of the original mesh to render")]
-    public int subMeshIndex = 0;
+    private int subMeshIndex = 0;
 
 
 
@@ -34,7 +34,7 @@ public class AgentPopulation : MonoBehaviour
     public NativeArray<int> job_bins;
     public NativeArray<int> job_bin_counters;
     private NativeArray<float3> job_agent_overall_forces;
-    private NativeArray<float3> job_agent_positions;
+    public NativeArray<float3> job_agent_positions;
 
     // private variables
     private int num_bins;
@@ -149,9 +149,9 @@ public class AgentPopulation : MonoBehaviour
         for(int i=0; i<num_agents; i++)
         {
             // create random position
-            var x = UnityEngine.Random.Range(min_pt.x, max_pt.x)/5.0f;
-            var y = UnityEngine.Random.Range(min_pt.y, max_pt.y) / 5.0f;
-            var z = UnityEngine.Random.Range(min_pt.z, max_pt.z) / 5.0f;
+            var x = UnityEngine.Random.Range(min_pt.x, max_pt.x)/10.0f;
+            var y = UnityEngine.Random.Range(min_pt.y, max_pt.y) / 10.0f;
+            var z = UnityEngine.Random.Range(min_pt.z, max_pt.z) / 10.0f;
 
             // init agent to random position
             var agent = job_agents[i];
