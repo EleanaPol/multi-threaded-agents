@@ -15,6 +15,9 @@ public struct MoveAgentsJob : IJobParallelFor
     public float3 min;
     public float3 max;
 
+    public float3 gen_min;
+    public float3 gen_max;
+
     public Unity.Mathematics.Random random;
 
     public void Execute(int index)
@@ -29,9 +32,9 @@ public struct MoveAgentsJob : IJobParallelFor
             || moved_pos.z <= min.z || moved_pos.z >= max.z)
         {
             // create new random position in the box
-            var x = random.NextFloat(min.x, max.x) / 10.0f;
-            var y = random.NextFloat(min.y, max.y) / 10.0f;
-            var z = random.NextFloat(min.z, max.z) / 10.0f;
+            var x = random.NextFloat(gen_min.x, gen_max.x);
+            var y = random.NextFloat(gen_min.y, gen_max.y);
+            var z = random.NextFloat(gen_min.z, gen_max.z);
             var new_pos = new float3(x, y, z);
             agent.position = new_pos;
             agent.prev_position = new_pos;

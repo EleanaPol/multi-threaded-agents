@@ -10,6 +10,11 @@ public class AgentPopulation : MonoBehaviour
     [Header("Population Settings")]
     public int num_agents;
 
+    [Header("Generation Settings")]
+    public GenerationType generation_type;
+    public BoxCollider generation_region;
+    public GameObject mesh_region;
+
     [Header("Referenced Elements")]
     public AgentEnvironment a_environment;
     public GameObject agent_object;
@@ -49,6 +54,8 @@ public class AgentPopulation : MonoBehaviour
 
     private Vector3 min_pt;
     private Vector3 max_pt;
+    private Vector3 env_min_pt;
+    private Vector3 env_max_pt;
 
     private int num_forces;
     private Unity.Mathematics.Random random;
@@ -64,6 +71,10 @@ public class AgentPopulation : MonoBehaviour
 
     // Instanced Shader Arguments array
     private uint[] args = new uint[5] { 0, 0, 0, 0, 0 };
+
+    private Mesh mesh;
+    [HideInInspector] public Vector3[] mesh_verts;
+    private int num_verts;
 
 
     #region MonoBehaviour
@@ -129,8 +140,23 @@ public class AgentPopulation : MonoBehaviour
         num_cells = a_environment.grid_resolution;
         num_bins = a_environment.bin_resolution;
         num_agents_per_bin = a_environment.agents_per_bin;
-        min_pt = a_environment.min_pt;
-        max_pt = a_environment.max_pt;
+
+        env_min_pt = a_environment.min_pt;
+        env_max_pt = a_environment.max_pt;
+
+        switch (generation_type)
+        {
+            case GenerationType.GenerateFromRegion:
+                min_pt = generation_region.bounds.min;
+                max_pt = generation_region.bounds.max;
+                break;
+            case GenerationType.GenerateFromMesh:
+                var bounds = mesh_region.GetComponent<Collider>().bounds;
+                min_pt = bounds.min;
+                max_pt = bounds.max;
+                break;
+        }
+       
 
         axis_offset = a_environment.axis_offset_raw;
         bin_cell_size = a_environment.bin_cell_size;
@@ -146,24 +172,59 @@ public class AgentPopulation : MonoBehaviour
     #region Population Management
     private void InitPopulation()
     {
+        if (mesh_region != null) GetGenMeshData();
+
+        float3 pos = float3.zero;
+
         for(int i=0; i<num_agents; i++)
         {
             // create random position
-            var x = UnityEngine.Random.Range(min_pt.x, max_pt.x)/10.0f;
-            var y = UnityEngine.Random.Range(min_pt.y, max_pt.y) / 10.0f;
-            var z = UnityEngine.Random.Range(min_pt.z, max_pt.z) / 10.0f;
-
+            switch (generation_type)
+            {
+                case GenerationType.GenerateFromRegion:
+                    pos = CreateRandomPositionInRegion();
+                    break;
+                case GenerationType.GenerateFromMesh:
+                    pos = CreateRandomPositionFromMesh();
+                    break;
+                default:
+                    CreateRandomPositionInRegion();
+                    break;
+            }
+            
             // init agent to random position
             var agent = job_agents[i];
             agent.id = i;
-            agent.position = new float3(x, y, z);
-            agent.prev_position = new float3(x, y, z);
+            agent.position = pos;
+            agent.prev_position = pos;
             agent.velocity = float3.zero;
             agent.bin_id = 0;
             job_agents[i] = agent;
         }
 
         
+    }
+
+    private float3 CreateRandomPositionInRegion()
+    {
+        var x = UnityEngine.Random.Range(min_pt.x, max_pt.x);
+        var y = UnityEngine.Random.Range(min_pt.y, max_pt.y);
+        var z = UnityEngine.Random.Range(min_pt.z, max_pt.z);
+
+        return new float3(x, y, z);
+    }
+
+    private void GetGenMeshData()
+    {
+        mesh = mesh_region.GetComponent<MeshFilter>().sharedMesh;
+        mesh_verts = mesh.vertices;
+        num_verts = mesh_verts.Length;
+    }
+
+    private float3 CreateRandomPositionFromMesh()
+    {
+        var random_id = (int)UnityEngine.Random.Range(0, num_verts);
+        return mesh_region.transform.TransformPoint( mesh_verts[random_id]) ;
     }
 
     private void InitializePopulationForces()
@@ -289,8 +350,10 @@ public class AgentPopulation : MonoBehaviour
             agents = job_agents,
             overall_force = job_agent_overall_forces,
 
-            min = min_pt,
-            max = max_pt,
+            gen_min = min_pt,
+            gen_max = max_pt,
+            min = env_min_pt,
+            max = env_max_pt,
             random = random
         };
         AgentMoveJob.Schedule(num_agents, 128).Complete();
@@ -379,4 +442,12 @@ public class AgentPopulation : MonoBehaviour
     }
 
     #endregion
+}
+
+
+[System.Serializable]
+public enum GenerationType
+{
+    GenerateFromRegion,
+    GenerateFromMesh
 }
