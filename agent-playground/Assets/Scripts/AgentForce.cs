@@ -10,6 +10,7 @@ public class AgentForce : MonoBehaviour
     [HideInInspector] public int num_agents;
     public NativeArray<Agent> job_agents;
     public NativeArray<float3> job_agent_force;
+    [HideInInspector] public AgentPopulation population;
 
     [HideInInspector] public float strength;
 
@@ -42,8 +43,7 @@ public class AgentForce : MonoBehaviour
 
     public virtual void CalculateForce()
     {
-        if (!force_initialized) return;
-        ScheduleForceClearJob();
+        
     }
 
     private void OnDestroy()
@@ -65,7 +65,7 @@ public class AgentForce : MonoBehaviour
         if (job_agent_force.IsCreated) job_agent_force.Dispose();
     }
 
-    private void ScheduleForceClearJob()
+    public void ScheduleForceClearJob()
     {
         var clearForce = new ClearForcesJob
         {

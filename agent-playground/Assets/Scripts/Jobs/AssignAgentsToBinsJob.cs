@@ -30,6 +30,7 @@ public struct AssignAgentsToBinsJob : IJobParallelFor
         var bin_z = (int)(pos.z / bin_size);
 
         int bin_id = bin_y * bin_x_res * bin_z_res + bin_z * bin_x_res + bin_x;
+        //Debug.Log($"index {index} --- to bin {bin_id}");
 
         // update agent bin id
         agent.bin_id = bin_id;

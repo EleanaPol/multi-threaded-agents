@@ -11,10 +11,11 @@ public class PerlinForce : AgentForce
 
      public override void CalculateForce()
      {
-         base.CalculateForce();
+        if (!force_initialized) return;
+        //ScheduleForceClearJob();
 
-         //Debug.Log("---------> calculating perlin force");
-         var PerlinJob = new PerlinForceJob
+        //Debug.Log("---------> calculating perlin force");
+        var PerlinJob = new PerlinForceJob
          {
              agents = job_agents,
              agent_forces = job_agent_force,
@@ -26,6 +27,8 @@ public class PerlinForce : AgentForce
          PerlinJob.Schedule(num_agents, 128).Complete();
 
      }
+
+
 
 
 

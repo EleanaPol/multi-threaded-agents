@@ -13,6 +13,7 @@ public class AgentPopulation : MonoBehaviour
 
     [Header("Referenced Elements")]
     public AgentEnvironment a_environment;
+    public GameObject agent_object;
 
     [Header("System Forces")]
     public SystemForce[] forces;
@@ -20,24 +21,26 @@ public class AgentPopulation : MonoBehaviour
 
     // Native Arrays
     private NativeArray<Agent> job_agents;
-    private NativeArray<int> job_bins;
-    private NativeArray<int> job_bin_counters;
+    public NativeArray<int> job_bins;
+    public NativeArray<int> job_bin_counters;
     private NativeArray<float3> job_agent_overall_forces;
 
     // private variables
     private int num_bins;
     private int num_cells;
-    private int num_agents_per_bin;
+    [HideInInspector] public int num_agents_per_bin;
 
-    private int bin_x_res;
-    private int bin_z_res;
-    private int bin_cell_size;
+    [HideInInspector] public int bin_x_res;
+    [HideInInspector] public int bin_z_res;
+    [HideInInspector] public int bin_y_res;
+    [HideInInspector] public int bin_cell_size;
     private Vector3 axis_offset;
 
     private Vector3 min_pt;
     private Vector3 max_pt;
 
     private int num_forces;
+    private Unity.Mathematics.Random random;
 
 
     #region MonoBehaviour
@@ -85,6 +88,7 @@ public class AgentPopulation : MonoBehaviour
         bin_cell_size = a_environment.bin_cell_size;
         bin_x_res = a_environment.x_bin_res;
         bin_z_res = a_environment.z_bin_res;
+        bin_y_res = a_environment.y_bin_res;
 
         num_forces = forces.Length;
     }
@@ -97,9 +101,9 @@ public class AgentPopulation : MonoBehaviour
         for(int i=0; i<num_agents; i++)
         {
             // create random position
-            var x = UnityEngine.Random.Range(min_pt.x, max_pt.x);
-            var y = UnityEngine.Random.Range(min_pt.y, max_pt.y);
-            var z = UnityEngine.Random.Range(min_pt.z, max_pt.z);
+            var x = UnityEngine.Random.Range(min_pt.x, max_pt.x)/5.0f;
+            var y = UnityEngine.Random.Range(min_pt.y, max_pt.y) / 5.0f;
+            var z = UnityEngine.Random.Range(min_pt.z, max_pt.z) / 5.0f;
 
             // init agent to random position
             var agent = job_agents[i];
@@ -122,7 +126,7 @@ public class AgentPopulation : MonoBehaviour
             {                
                 forces[i].agent_force.strength = forces[i].force_strength;
                 forces[i].agent_force.num_agents = num_agents;
-                forces[i].agent_force.job_agents = job_agents;
+                forces[i].agent_force.population = this;               
                 forces[i].agent_force.InitForce();
             }
         }
@@ -136,6 +140,7 @@ public class AgentPopulation : MonoBehaviour
             {
                 forces[i].agent_force.strength = forces[i].force_strength;
                 forces[i].agent_force.job_agents = job_agents;
+                forces[i].agent_force.population = this;
 
                 forces[i].agent_force.CalculateForce();
 
@@ -222,13 +227,15 @@ public class AgentPopulation : MonoBehaviour
 
     private void ScheduleAgentMove()
     {
+        random = new Unity.Mathematics.Random((uint)UnityEngine.Random.Range(1, 100));
         var AgentMoveJob = new MoveAgentsJob
         {
             agents = job_agents,
             overall_force = job_agent_overall_forces,
 
             min = min_pt,
-            max = max_pt
+            max = max_pt,
+            random = random
         };
         AgentMoveJob.Schedule(num_agents, 128).Complete();
     }
@@ -251,10 +258,12 @@ public class AgentPopulation : MonoBehaviour
     {
         for(int i=0; i<num_agents; i++)
         {
-            GameObject agent = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            //GameObject agent = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            GameObject agent = Instantiate(agent_object);
+
             agent.name = "agent_" + i.ToString();
             agent.transform.position = job_agents[i].position;
-            agent.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+            //agent.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
             agent.transform.SetParent(transform);
         }
     }
