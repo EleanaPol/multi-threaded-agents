@@ -4,7 +4,7 @@ using UnityEngine;
 using Unity.Mathematics;
 using Unity.Jobs;
 
-public class ConstantForce : AgentForce
+public class UniformForce : AgentForce
 {
     public float3 force;
 

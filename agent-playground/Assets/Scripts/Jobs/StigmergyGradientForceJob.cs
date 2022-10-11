@@ -22,7 +22,8 @@ public struct StigmergyGradientForceJob : IJobParallelFor
 
     public void Execute(int index)
     {
-        var pos = agents[index].position + offset;
+        var pos = agents[index].position  + offset;
+        
         int y_coord = (int)(pos.y / cell_size);
         int z_coord = (int)(pos.z / cell_size);
         int x_coord = (int)(pos.x / cell_size);
