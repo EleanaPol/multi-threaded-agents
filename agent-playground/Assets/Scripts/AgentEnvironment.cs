@@ -42,7 +42,7 @@ public class AgentEnvironment : MonoBehaviour
     private float3 bin_axis_offset;
     private Vector3 center;
 
-    private float3[] grid_pts;
+    [HideInInspector] public float3[] grid_pts;
     private float3[] bin_pts;
 
     private void Awake()
