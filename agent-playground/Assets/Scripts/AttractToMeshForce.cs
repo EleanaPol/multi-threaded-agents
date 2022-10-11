@@ -11,6 +11,10 @@ public class AttractToMeshForce : AgentForce
     public GameObject mesh_object;
     public AgentEnvironment a_environment;
 
+    [Header("Attraction Settings")]
+    public float max_strenth;
+    public float min_strength;
+
     // native arrays
     public NativeArray<float3> job_mesh_field;
     public NativeArray<float3> job_grid_pts;
@@ -111,7 +115,9 @@ public class AttractToMeshForce : AgentForce
             grid_points = job_grid_pts,
 
             cell_size = a_environment.cell_size,
-            vertex_count = verts.Length
+            vertex_count = verts.Length,
+            max_force = max_strenth,
+            min_force = min_strength
         };
         getField.Schedule(a_environment.grid_resolution, 128).Complete();
     }
@@ -127,7 +133,9 @@ public class AttractToMeshForce : AgentForce
             offset = offset,
             res_x = res_x,
             res_z = res_z,
-            cell_size = cell_size
+            cell_size = cell_size,
+
+            
         };
 
         sampleJob.Schedule(num_agents, 128).Complete();
