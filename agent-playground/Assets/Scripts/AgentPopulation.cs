@@ -232,8 +232,8 @@ public class AgentPopulation : MonoBehaviour
         for (int i = 0; i < num_forces; i++)
         {
             if (forces[i].enabled)
-            {                
-                forces[i].agent_force.strength = forces[i].force_strength;
+            {
+                forces[i].agent_force.strength = forces[i].agent_force.OVERALL_STRENGTH;// force_strength;
                 forces[i].agent_force.num_agents = num_agents;
                 forces[i].agent_force.population = this;               
                 forces[i].agent_force.InitForce();
@@ -247,13 +247,13 @@ public class AgentPopulation : MonoBehaviour
         {
             if (forces[i].enabled)
             {
-                forces[i].agent_force.strength = forces[i].force_strength;
+                forces[i].agent_force.strength = forces[i].agent_force.OVERALL_STRENGTH;
                 forces[i].agent_force.job_agents = job_agents;
                 forces[i].agent_force.population = this;
 
                 forces[i].agent_force.CalculateForce();
 
-                ScheduleForceAdditionJob(forces[i].agent_force.job_agent_force, forces[i].force_strength);
+                ScheduleForceAdditionJob(forces[i].agent_force.job_agent_force, forces[i].agent_force.OVERALL_STRENGTH);
             }
         }
 

@@ -7,7 +7,7 @@ public class SystemForce
 {
     public string name;
     public bool enabled;
-    [Range(-2.0f,2.0f)]
-    public float force_strength;
+    //[Range(-2.0f,2.0f)]
+    //public float force_strength;
     public AgentForce agent_force;
 }

@@ -17,7 +17,7 @@ public class StigmergyManager : MonoBehaviour
     public float chemical_decay;
 
     // native arrays
-    private NativeArray<float> job_scalar_field;
+    public NativeArray<float> job_scalar_field;
     public NativeArray<float> job_flipped_scalar_field;
 
 

@@ -167,6 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b0cd26174c47794aab206d04473b91f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OVERALL_STRENGTH: -1
   num_agents: 0
   population: {fileID: 0}
   strength: 0
@@ -439,24 +440,19 @@ MonoBehaviour:
   forces:
   - name: Boids Force
     enabled: 1
-    force_strength: 0.5
     agent_force: {fileID: 1781853400}
   - name: Perlin Noise Force
     enabled: 1
-    force_strength: 0.5
     agent_force: {fileID: 1240369556}
   - name: Attraction Force
     enabled: 1
-    force_strength: 0.3
     agent_force: {fileID: 876102428}
   - name: Constant Force
     enabled: 1
-    force_strength: 0.35
     agent_force: {fileID: 1588619935}
-  - name: Mesh Attract Force
+  - name: Stigmergy Gradient Force
     enabled: 1
-    force_strength: -1
-    agent_force: {fileID: 126830902}
+    agent_force: {fileID: 901556259}
   instanceMesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   instanceMaterial: {fileID: 2100000, guid: 726f5fbe591d58a4189b092a3d7bf25e, type: 2}
   num_agents_per_bin: 0
@@ -624,6 +620,53 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &636214425
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 636214427}
+  - component: {fileID: 636214426}
+  m_Layer: 0
+  m_Name: OBJ_Exporter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &636214426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 636214425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1f6eebba439b8a49b5619c5ee596d32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  root: {fileID: 2077829904}
+  m_name: sphere
+--- !u!4 &636214427
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 636214425}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
@@ -819,6 +862,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ce6af83b1237634f99017a0e53f9344, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OVERALL_STRENGTH: 0.3
   num_agents: 0
   population: {fileID: 0}
   strength: 0
@@ -827,6 +871,57 @@ MonoBehaviour:
   - {fileID: 2002462622}
   - {fileID: 470640537}
   - {fileID: 215775748}
+--- !u!1 &901556257
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 901556258}
+  - component: {fileID: 901556259}
+  m_Layer: 0
+  m_Name: Stigmergy_Gradient
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &901556258
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 901556257}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1758448644}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &901556259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 901556257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 027f169f7f6c3de499ecf559574b2bba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OVERALL_STRENGTH: 0.6
+  num_agents: 0
+  population: {fileID: 0}
+  strength: 0
+  force_initialized: 0
+  a_environment: {fileID: 546649994}
+  a_stigmergy: {fileID: 847158309}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -941,6 +1036,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f02850d299334614692c6f1a26f58d1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OVERALL_STRENGTH: 0.5
   num_agents: 0
   population: {fileID: 0}
   strength: 0
@@ -1059,6 +1155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce09f8b2a17eead40b48453f8d8efd0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OVERALL_STRENGTH: 0.35
   num_agents: 0
   population: {fileID: 0}
   strength: 0
@@ -1121,7 +1218,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1667823225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1135,9 +1232,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stigmergy: {fileID: 847158309}
+  exporter: {fileID: 636214426}
   _triangleBudget: 524288
   _targetValue: 0.5
   _builderCompute: {fileID: 7200000, guid: 9f19ed91e8aa34430ac0ea80fb20eead, type: 3}
+  CPU_mesh: {fileID: 0}
 --- !u!23 &1667823226
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1236,6 +1335,7 @@ Transform:
   - {fileID: 876102427}
   - {fileID: 1588619934}
   - {fileID: 126830901}
+  - {fileID: 901556258}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1283,6 +1383,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5f0786c2e2d58749a870d77b3b2baa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OVERALL_STRENGTH: 0.5
   num_agents: 0
   population: {fileID: 0}
   strength: 0

@@ -103,8 +103,8 @@ sealed class MeshBuilder : System.IDisposable
     #region Mesh objects
 
     Mesh _mesh;
-    GraphicsBuffer _vertexBuffer;
-    GraphicsBuffer _indexBuffer;
+    public GraphicsBuffer _vertexBuffer;
+    public GraphicsBuffer _indexBuffer;
 
     void AllocateMesh(int vertexCount)
     {
@@ -133,7 +133,10 @@ sealed class MeshBuilder : System.IDisposable
         // GraphicsBuffer references
         _vertexBuffer = _mesh.GetVertexBuffer(0);
         _indexBuffer = _mesh.GetIndexBuffer();
+       
     }
+
+    
 
     void ReleaseMesh()
     {

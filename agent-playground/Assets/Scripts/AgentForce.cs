@@ -7,6 +7,8 @@ using Unity.Jobs;
 
 public class AgentForce : MonoBehaviour
 {
+    [Range(-5.0f,5.0f)]
+    public float OVERALL_STRENGTH;
     [HideInInspector] public int num_agents;
     public NativeArray<Agent> job_agents;
     public NativeArray<float3> job_agent_force;

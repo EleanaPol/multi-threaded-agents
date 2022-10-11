@@ -13,6 +13,7 @@ public struct BakeMeshForceJob : IJobParallelFor
     public NativeArray<float3> grid_points;
     public NativeArray<float3> field_points;
     [NativeDisableParallelForRestriction] public NativeArray<Vector3> mesh_vertices;
+    
 
     public int vertex_count;
     public float cell_size;
