@@ -24,6 +24,7 @@ public class AgentPopulation : MonoBehaviour
 
     [Header("Population Rendering")]
     [Tooltip("The mesh to be instanced")]
+    public bool display_agents;
     public Mesh instanceMesh;
 
     [Tooltip("The material with which to render the instanced meshes")]
@@ -114,6 +115,10 @@ public class AgentPopulation : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (display_agents == false)
+        {
+            return;
+        }
         // Update the Buffers with the new data for this frame
         positionBuffer.SetData(job_agent_positions);
 
@@ -212,6 +217,13 @@ public class AgentPopulation : MonoBehaviour
 
         
     }
+
+    public void DisplayPopulation(bool display)
+    {
+        display_agents = display;
+    }
+
+
 
     public void ResetPopulation()
     {

@@ -71,11 +71,7 @@ public class AgentMesher : MonoBehaviour
         // export mesh
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            CreateCPUMesh();
-            exporter.mesh = CPU_mesh;
-            exporter.name = "new_mesh";
-            exporter.root = transform;
-            exporter.DoExportWOSubmeshes();
+            
 
            
         }
@@ -91,6 +87,15 @@ public class AgentMesher : MonoBehaviour
         if (meshIndices.IsCreated) meshIndices.Dispose();
 
         //CreateCPUMesh();
+    }
+
+    public void ExportCPUMesh()
+    {
+        CreateCPUMesh();
+        exporter.mesh = CPU_mesh;
+        exporter.name = "new_mesh";
+        exporter.root = transform;
+        exporter.DoExportWOSubmeshes();
     }
 
     public void CreateCPUMesh()
