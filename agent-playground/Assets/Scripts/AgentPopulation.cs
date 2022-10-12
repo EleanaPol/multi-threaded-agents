@@ -96,11 +96,18 @@ public class AgentPopulation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*if (Input.GetKeyDown(KeyCode.R))
+        {
+            ResetPopulation();
+        }*/
+
         AssignToBins();
         UpdatePopulationForces();
         MoveAgents();
 
         ClearAgentForces();
+
+        
 
         //UpdateAgentObjects();
     }
@@ -200,9 +207,16 @@ public class AgentPopulation : MonoBehaviour
             agent.velocity = float3.zero;
             agent.bin_id = 0;
             job_agents[i] = agent;
+            //job_agent_overall_forces[i] = float3.zero;
         }
 
         
+    }
+
+    public void ResetPopulation()
+    {
+        InitPopulation();
+        ClearAgentForces();
     }
 
     private float3 CreateRandomPositionInRegion()

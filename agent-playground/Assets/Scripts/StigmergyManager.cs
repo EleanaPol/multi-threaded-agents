@@ -42,7 +42,10 @@ public class StigmergyManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        /*if (Input.GetKeyDown(KeyCode.R))
+        {
+            ResetField();
+        }*/
     }
     private void LateUpdate()
     {
@@ -68,6 +71,15 @@ public class StigmergyManager : MonoBehaviour
 
         num_cells = res_x * res_y * res_z;
         num_agents = a_population.num_agents;
+    }
+
+    public void ResetField()
+    {
+        var resetJob = new ResetFieldJob
+        {
+            field_values = job_scalar_field
+        };
+        resetJob.Schedule(num_cells, 128).Complete();
     }
 
     #endregion
