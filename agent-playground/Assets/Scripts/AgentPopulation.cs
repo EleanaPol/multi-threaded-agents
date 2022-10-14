@@ -9,6 +9,7 @@ public class AgentPopulation : MonoBehaviour
 {   
     [Header("Population Settings")]
     public int num_agents;
+    public bool PLAY;
 
     [Header("Generation Settings")]
     public GenerationType generation_type;
@@ -102,6 +103,8 @@ public class AgentPopulation : MonoBehaviour
             ResetPopulation();
         }*/
 
+        if (!PLAY) return;
+
         AssignToBins();
         UpdatePopulationForces();
         MoveAgents();
@@ -115,6 +118,7 @@ public class AgentPopulation : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (!PLAY) return;
         if (display_agents == false)
         {
             return;
@@ -223,6 +227,11 @@ public class AgentPopulation : MonoBehaviour
         display_agents = display;
     }
 
+
+    public void PlaySimulation()
+    {
+        PLAY = true;
+    }
 
 
     public void ResetPopulation()

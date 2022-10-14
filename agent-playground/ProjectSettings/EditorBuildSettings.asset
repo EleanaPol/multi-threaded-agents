@@ -5,13 +5,33 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Playground_UI.unity
     guid: 29a52a6a5421ebf4c8b71e5dd40cf675
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Playground.unity
     guid: 545330dde1a7a8145b959ec36aecb485
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Gallery.unity
     guid: 303e0707d65516e46b84587a27426efa
-  m_configObjects: {}
+  - enabled: 0
+    path: Assets/Scenes/LandingPage_AR.unity
+    guid: 6d455c5b974e8314980702bfc92de87d
+  - enabled: 0
+    path: Assets/Scenes/Playground_AR.unity
+    guid: 365b37ceb31dc4347b8fd57afa3786db
+  - enabled: 0
+    path: Assets/Scenes/Playground_AR_VUFORIA.unity
+    guid: faf6535abddf1ad40a4a082d3b3694ba
+  - enabled: 0
+    path: Assets/Scenes/VUFORIA_BASE.unity
+    guid: a4bea9e0acdf26e489ef3a6da9507755
+  - enabled: 0
+    path: Assets/Scenes/VUFORIA_IMAGE.unity
+    guid: 3ed7230a6bc29654891071f3ce7ad106
+  - enabled: 1
+    path: Assets/Scenes/VUFORIA_PLANE.unity
+    guid: 4cedd9a681e17e346bb2492f7d1892ab
+  m_configObjects:
+    UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: d303bf8f000d6d3498ea7a516a2e0627, type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: e79f8bc8a43b1334bb2dfc9037b6a3d3, type: 2}
