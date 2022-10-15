@@ -60,7 +60,9 @@ This force, handled through the **AttractToMeshComponent** is responsible for at
 ### Agent Population
 The **AgentPopulation** component is responsible for generating a defined number of agents in a set region, that can either be a box collider(Generation Region) or the surface of a mesh object (Mesh Region). Additionally the component requires a reference to the system's **AgentEnvironment**. The Agent Population is responsible for applying the forces to the system's agents through the list of Forces. Every force can be named and enabled/disabled. The forces also require a refernce to the actual forces components. This is where you can manage the totality of forces that will affect the agent system throughout the simulation, in order for the simulation to run the **PLAY AGENTS** boolean should be enabled. Finally this component is responsible for rendering the agents, you can change the agent entity geometry through the Instance Mesh parameter.  
 
-![Image](https://github.com/EleanaPol/multi-threaded-agents/blob/main/Documentation/Population.PNG)   
+![Image](https://github.com/EleanaPol/multi-threaded-agents/blob/main/Documentation/Population.PNG)  
+
+**ATTENTION** If you are generating the agents from a mesh surface, make sure this surface is fully enclosed in the region of the Agent enviroment box collider otherwise you will get compilation errors.
 ### Stigmergy Manager
 This component is responsible of actually writting a value on the corresponding grid voxel based on each agent's location. The value can be defined through the chemical value parameter and can either stay on the grid forever or it can fade in time. This fading is defined through the chemical decay parameter. The higher the decay the longer the chemical lives. The component also requires references to the system's AgentPopulation and AgentEnvironment components.  
 
