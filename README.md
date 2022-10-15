@@ -27,8 +27,10 @@ The system's environment is handled through the **AgentEnvironment** component a
 ### Agent Forces
 All Agent forces derive from the same base class and have an **OVERALL STRENGTH** variable that is responsible for defining the strength of each force at a specific given time. The project contains six different force components all of which can be used mulltiple times in the system based on the desired approach.
 * **Boids Force**  
-The boids force is developed to incorporate the dynamic forces between the agents of the population. These forces are: cohesion, separation and alignmenet and are all dependent on the agents' proximity with each other and the corresponding thresholds of activation for each force. Apart from the thresholds, the strength of each of the three boids forces can be separately set through this component.  
+The boids force, handled through the **BoidsForce** component, is developed to incorporate the dynamic forces between the agents of the population. These forces are: cohesion, separation and alignmenet and are all dependent on the agents' proximity with each other and the corresponding thresholds of activation for each force. Apart from the thresholds, the strength of each of the three boids forces can be separately set through this component.  
 ![Image](https://github.com/EleanaPol/multi-threaded-agents/blob/main/Documentation/Boids.PNG)
 * **Attraction Force**
-This force is responsible for attracting the agents to the closest GameObject from a list of attractors. By switching the OVERALL STRENGTH of this component to a negative value the attractors switch and become repellers instead. But using multiple instances of this force, unique force variation can be developed in the system.  
-![Image](https://github.com/EleanaPol/multi-threaded-agents/blob/main/Documentation/Attraction.PNG)
+This force is handled through the **AtrractionForce** component and is responsible for attracting the agents to the closest GameObject from a list of attractors. By switching the OVERALL STRENGTH of this component to a negative value the attractors switch and become repellers instead. But using multiple instances of this force, unique force variation can be developed in the system.  
+![Image](https://github.com/EleanaPol/multi-threaded-agents/blob/main/Documentation/Attraction.PNG)  
+* **Uniform**
+The **UniformForce** component is responsible for attaching a force of a selected uniform direction to all the agents of the system. This force is useful if you want to make the agents move towards a specific global direction (upwards for example).
