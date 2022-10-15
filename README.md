@@ -7,7 +7,7 @@
 ## Project Info
 
 **Author:** 
-* [Eleana Polychronaki](https://github.com/EleanaPol)
+[Eleana Polychronaki](https://github.com/EleanaPol)
 
 **Development Platform:**
 Unity 2021.3
