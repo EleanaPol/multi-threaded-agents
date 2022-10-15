@@ -38,7 +38,7 @@ public class ObjExporter : MonoBehaviour
 		
 
 		string meshName = m_name;
-		string fileName = EditorUtility.SaveFilePanel("Export .obj file", "", meshName, "obj");
+		string fileName =  EditorUtility.SaveFilePanel("Export .obj file", "", meshName, "obj");
 
 		ObjExporterScript.Start();
 

@@ -9,6 +9,7 @@ public class AgentPopulation : MonoBehaviour
 {   
     [Header("Population Settings")]
     public int num_agents;
+    public bool PLAY_AGENTS;
 
     [Header("Generation Settings")]
     public GenerationType generation_type;
@@ -17,7 +18,7 @@ public class AgentPopulation : MonoBehaviour
 
     [Header("Referenced Elements")]
     public AgentEnvironment a_environment;
-    public GameObject agent_object;
+    [HideInInspector] public GameObject agent_object;
 
     [Header("System Forces")]
     public SystemForce[] forces;
@@ -83,6 +84,7 @@ public class AgentPopulation : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //PLAY_AGENTS = false;
         Init();
         AllocateJobMemory();
         InitPopulation();
@@ -97,6 +99,10 @@ public class AgentPopulation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(PLAY_AGENTS == false)
+        {
+            return;
+        }
         /*if (Input.GetKeyDown(KeyCode.R))
         {
             ResetPopulation();
@@ -115,6 +121,10 @@ public class AgentPopulation : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (PLAY_AGENTS == false)
+        {
+            return;
+        }
         if (display_agents == false)
         {
             return;
@@ -177,6 +187,11 @@ public class AgentPopulation : MonoBehaviour
         bin_y_res = a_environment.y_bin_res;
 
         num_forces = forces.Length;
+    }
+
+    public void StartSimulation()
+    {
+        PLAY_AGENTS = true;
     }
 
     #endregion

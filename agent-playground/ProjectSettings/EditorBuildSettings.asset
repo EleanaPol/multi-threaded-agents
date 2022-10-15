@@ -5,13 +5,16 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Playground_UI.unity
     guid: 29a52a6a5421ebf4c8b71e5dd40cf675
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Playground.unity
     guid: 545330dde1a7a8145b959ec36aecb485
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Gallery.unity
     guid: 303e0707d65516e46b84587a27426efa
+  - enabled: 1
+    path: Assets/Scenes/AR_AGENT_SIMULATION.unity
+    guid: 82b308c07d92ad34faf72a7fe539bdfa
   m_configObjects: {}
