@@ -46,7 +46,7 @@ This force, handled through the **PerlinForce** component, is responsible for ge
 The **StigmergyGradientForce** takes into account the positions in the environment where the agents have already travelled. Based on the scalar field of tracked agents, the gradient is calculated which is trying to pull the population towards those preferred (already travelled through) paths. The component takes as input references the **AgentPopulation** and **StigmergyManager** components of the system.  
 
 ![Image](https://github.com/EleanaPol/multi-threaded-agents/blob/main/Documentation/Stigmergy.PNG)
-* **Atract To Mesh Force**  
+* **Attract To Mesh Force**  
 This force, handled through the **AttractToMeshComponent** is responsible for attracting the agents towards a defined mesh geometry. The component takes as reference the systems **AgentEnvironment** and the mesh geometry towards which the agents will be attracted. We can vary the strength of the attraction based on the distance of the agent from the mesh at any given time through the max and min strength parameters. The closer the agent goes to the mesh the stronger the attraction will be (max strenth). If you wish a uniform attraction independent of distance, then both min and max values should be set to the same number. The attraction forces are calculated from the environment's voxel grid positions towards the corresponding closest mesh vertex. As this is a computationally heavy calculation it is only performed **once** at the start of the game. That means that even if the mesh is moved during rutime, the attraction will be only towards the position it originally had in the start of the game.  
 
 ![Image](https://github.com/EleanaPol/multi-threaded-agents/blob/main/Documentation/MeshAttract.PNG)
