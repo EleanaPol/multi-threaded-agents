@@ -42,3 +42,5 @@ The **UniformForce** component is responsible for attaching a force of a selecte
 This force, handled through the **PerlinForce** component, is responsible for generating a curl noise vectorfield on the positions of the 3D voxel gris and in turn based on the relative positions of the agents apply the corresponding force to their movement. The curl noise can be customized by playing with the noise scale and noise speed parameters. The scale defines the resolution of the turbulence in the vector field, whereas the speed defines the movement of the curl field in space.  
 
 ![Image](https://github.com/EleanaPol/multi-threaded-agents/blob/main/Documentation/Perlin.PNG)
+* **Stigmergy Gradient Force**  
+The **StigmergyGradientForce** takes into account the positions in the environment where the agents have already travelled. Based on the scalar field of tracked agents, the gradient is calculated which is trying to pull the population towards those preferred (already travelled through) paths. 
