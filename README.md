@@ -35,3 +35,6 @@ This force is handled through the **AtrractionForce** component and is responsib
 * **Uniform Force**
 The **UniformForce** component is responsible for attaching a force of a selected uniform direction to all the agents of the system. This force is useful if you want to make the agents move towards a specific global direction (upwards for example).  
 ![Image](https://github.com/EleanaPol/multi-threaded-agents/blob/main/Documentation/Uniform.PNG)
+* **Perlin Force**
+This force, handled through the **PerlinForce** component, is responsible for generating a curl noise vectorfield on the positions of the 3D voxel gris and in turn based on the relative positions of the agents apply the corresponding force to their movement. The curl noise can be customized by playing with the noise scale and noise speed parameters. The scale defines the resolution of the turbulence in the vector field, whereas the speed defines the movement of the curl field in space.  
+![Image](https://github.com/EleanaPol/multi-threaded-agents/blob/main/Documentation/Perlin.PNG)
