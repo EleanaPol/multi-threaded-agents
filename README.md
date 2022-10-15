@@ -32,5 +32,5 @@ The boids force, handled through the **BoidsForce** component, is developed to i
 * **Attraction Force**
 This force is handled through the **AtrractionForce** component and is responsible for attracting the agents to the closest GameObject from a list of attractors. By switching the OVERALL STRENGTH of this component to a negative value the attractors switch and become repellers instead. But using multiple instances of this force, unique force variation can be developed in the system.  
 ![Image](https://github.com/EleanaPol/multi-threaded-agents/blob/main/Documentation/Attraction.PNG)  
-* **Uniform**
+* **Uniform Force**
 The **UniformForce** component is responsible for attaching a force of a selected uniform direction to all the agents of the system. This force is useful if you want to make the agents move towards a specific global direction (upwards for example).
