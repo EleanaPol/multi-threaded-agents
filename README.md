@@ -62,7 +62,7 @@ The **AgentPopulation** component is responsible for generating a defined number
 
 ![Image](https://github.com/EleanaPol/multi-threaded-agents/blob/main/Documentation/Population.PNG)  
 
-**ATTENTION** If you are generating the agents from a mesh surface, make sure this surface is fully enclosed in the region of the Agent enviroment box collider otherwise you will get compilation errors.
+**ATTENTION** If you are generating the agents from a mesh surface, make sure the mesh is fully enclosed in the region of the Agent Enviroment box collider otherwise you will get compilation errors.
 ### Stigmergy Manager
 This component is responsible of actually writting a value on the corresponding grid voxel based on each agent's location. The value can be defined through the chemical value parameter and can either stay on the grid forever or it can fade in time. This fading is defined through the chemical decay parameter. The higher the decay the longer the chemical lives. The component also requires references to the system's AgentPopulation and AgentEnvironment components.  
 
