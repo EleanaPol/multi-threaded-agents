@@ -57,5 +57,5 @@ The **AgentPopulation** component is responsible for generating a defined number
 ![Image](https://github.com/EleanaPol/multi-threaded-agents/blob/main/Documentation/Population.PNG)   
 ### Stigmergy Manager
 This component is responsible of actually writting a value on the corresponding grid voxel based on each agent's location. The value can be defined through the chemical value parameter and can either stay on the grid forever or it can fade in time. This fading is defined through the chemical decay parameter. The higher the decay the longer the chemical lives. The component also requires references to the system's AgentPopulation and AgentEnvironment components.
-### Agent Mesher
-The **AgentMesher** component is responsible for meshing the paths where the agent's have already travelled. 
+### Agent Meshing
+The **AgentMesher** component is responsible for meshing the paths where the agent's have already travelled based on the values that are written on the voxel grid through the stigmergy manager. The gameobject that this component is attached to, also requires a **MeshFilter** and a **MeshRenderer** component. The MeshFilter will be dynamically filled with the procedural mesh that get generated whereas the material of that mesh can be defined through the mterial on the MeshRenderer.
