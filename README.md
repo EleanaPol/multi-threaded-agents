@@ -43,4 +43,5 @@ This force, handled through the **PerlinForce** component, is responsible for ge
 
 ![Image](https://github.com/EleanaPol/multi-threaded-agents/blob/main/Documentation/Perlin.PNG)
 * **Stigmergy Gradient Force**  
-The **StigmergyGradientForce** takes into account the positions in the environment where the agents have already travelled. Based on the scalar field of tracked agents, the gradient is calculated which is trying to pull the population towards those preferred (already travelled through) paths. 
+The **StigmergyGradientForce** takes into account the positions in the environment where the agents have already travelled. Based on the scalar field of tracked agents, the gradient is calculated which is trying to pull the population towards those preferred (already travelled through) paths. The component takes as input references the **AgentPopulation** and **StigmergyManager** components of the system.  
+![Image](https://github.com/EleanaPol/multi-threaded-agents/blob/main/Documentation/Stigmergy.PNG)
