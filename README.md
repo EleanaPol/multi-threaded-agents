@@ -24,4 +24,5 @@ Playground
 The system's environment is handled through the **AgentEnvironment** component and is responsible for generating the 3D voxel grid that will hold the information of the agents' movement in space. The component requires a Box Collider component reference to define the region within which the agents will move and be tracked. The cell size defines the resolution of the 3D voxel grid that will be generated within the agent region. The AgentEnvironment component also handles the binning system by defining the bin cell size and the maximum agents allowed per bin. Each agent system requires only  **one** environment.
 
 ### Agent Forces
-All Agent forces 
+All Agent forces derive from the same base class and have an **OVERALL STRENGTH** variable that is responsible for defining the strength of each force at a specific given time. The system contains six different forces:
+* Boids Force
