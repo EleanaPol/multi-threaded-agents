@@ -16,4 +16,8 @@ Unity 2021.3
 **Target Platform:**
 Windows Standalone/Mac
 
+**Working Scene:**
+Playground
+
 ## System Breakdown
+### Environment
